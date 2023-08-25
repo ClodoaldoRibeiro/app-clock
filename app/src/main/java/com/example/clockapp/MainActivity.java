@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewHolder mViewHolder = new ViewHolder();
     final Handler mHandler = new Handler();
     private boolean mTicker;
+    private boolean mHasLandscape;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         mViewHolder.textHourMinutes = findViewById(R.id.text_hour_minute);
         mViewHolder.textSeconds = findViewById(R.id.text_seconds);
         mViewHolder.textBattery = findViewById(R.id.text_battery);
+        mViewHolder.textNight = findViewById(R.id.text_night);
+
     }
 
     @Override
@@ -42,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         this.mTicker = true;
         this.startClock();
-        this.registerReceiver(this.mReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        this.registerReceiver(mReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        this.mHasLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     @Override
@@ -55,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        
+
         if (hasFocus) {
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_IMMERSIVE
@@ -92,6 +97,14 @@ public class MainActivity extends AppCompatActivity {
                 int minute = calendar.get(Calendar.MINUTE);
                 int second = calendar.get(Calendar.SECOND);
 
+                if (mHasLandscape) {
+                    if (hour > 18) {
+                        mViewHolder.textNight.setVisibility(View.VISIBLE);
+                    } else {
+                        mViewHolder.textNight.setVisibility(View.GONE);
+                    }
+                }
+
                 mViewHolder.textHourMinutes.setText(
                         String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
                 );
@@ -108,10 +121,10 @@ public class MainActivity extends AppCompatActivity {
         this.mRunnable.run();
     }
 
-
     private static class ViewHolder {
         TextView textHourMinutes;
         TextView textSeconds;
         TextView textBattery;
+        TextView textNight;
     }
 }
