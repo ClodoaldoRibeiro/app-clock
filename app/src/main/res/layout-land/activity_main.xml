@@ -13,6 +13,7 @@
         android:layout_margin="16dp"
         android:padding="16dp"
         android:text="Boa noite"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="Nível de bateria"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -31,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:00"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="120sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -44,6 +47,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="8sp"
         android:text="00"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="50sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/text_hour_minute"
         app:layout_constraintHorizontal_chainStyle="packed"
